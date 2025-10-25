@@ -14,6 +14,7 @@ namespace FileCloud.Data
 
     public DbSet<CloudFile> Files { get; set; }
     public DbSet<CloudFileShared> SharedFiles { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<ElmahError> ElmahErrors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -44,6 +45,16 @@ namespace FileCloud.Data
                     .WithMany()
                     .HasForeignKey(sf => sf.SharedWithUserId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasKey(rt => rt.Id);
+                entity.Property(rt => rt.Token).IsRequired();
+                entity.Property(rt => rt.UserId).IsRequired();
+                entity.Property(rt => rt.ExpiryDate).IsRequired();
+                entity.Property(rt => rt.IsRevoked).IsRequired();
+                entity.HasIndex(rt => rt.Token).IsUnique();
             });
 
             // Configuración de la tabla ELMAH_Error

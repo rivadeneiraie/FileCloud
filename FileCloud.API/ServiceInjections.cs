@@ -11,6 +11,7 @@ namespace FileCloud.API
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IService<>), typeof(Service<>));
+            services.AddScoped<IAccountService, AccountService>();
             return services;
         }
 
