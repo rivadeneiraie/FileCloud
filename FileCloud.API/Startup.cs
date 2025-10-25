@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ElmahCore;
+using ElmahCore.Mvc;
+using ElmahCore.Sql;
 
 namespace FileCloud.API
 {
@@ -27,6 +30,13 @@ namespace FileCloud.API
 
             // Registrar servicios de dominio
             ServiceInjections.AddDomainServices(services);
+
+            // Registrar ElmahCore con almacenamiento en SQL Server y dashboard en /elmah
+            services.AddElmah<ElmahCore.Sql.SqlErrorLog>(options =>
+            {
+                options.Path = "elmah";
+                options.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,6 +68,9 @@ namespace FileCloud.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Habilitar ElmahCore en /elmah
+            app.UseElmah();
 
             app.UseSwagger();
             app.UseSwaggerUI();
