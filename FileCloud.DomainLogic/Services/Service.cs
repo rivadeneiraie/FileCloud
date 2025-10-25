@@ -9,10 +9,10 @@ namespace FileCloud.DomainLogic.Services
 {
     public class Service<T> : IService<T> where T : class
     {
-    private readonly FileCloud.Data.FileCloudDbContext _context;
+    private readonly FileCloud.Data.Context.FileCloudDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public Service(FileCloud.Data.FileCloudDbContext context)
+        public Service(FileCloud.Data.Context.FileCloudDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();

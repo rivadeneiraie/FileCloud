@@ -1,6 +1,6 @@
 using System;
 
-namespace FileCloud.Data
+namespace FileCloud.Domain
 {
     public class ElmahError
     {

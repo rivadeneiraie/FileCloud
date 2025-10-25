@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using FileCloud.Data.Context;
+using FileCloud.Domain;
 
 #nullable disable
 
@@ -22,7 +24,7 @@ namespace FileCloud.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FileCloud.Data.ElmahError", b =>
+            modelBuilder.Entity("FileCloud.Domain.ElmahError", b =>
                 {
                     b.Property<Guid>("ErrorId")
                         .ValueGeneratedOnAdd()

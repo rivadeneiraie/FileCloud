@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using FileCloud.Domain;
 
-namespace FileCloud.Data
+namespace FileCloud.Data.Context
 {
     public class FileCloudDbContext : IdentityDbContext<IdentityUser>
     {
@@ -12,10 +12,10 @@ namespace FileCloud.Data
         {
         }
 
-    public DbSet<CloudFile> Files { get; set; }
-    public DbSet<CloudFileShared> SharedFiles { get; set; }
-    public DbSet<RefreshToken> RefreshTokens { get; set; }
-    public DbSet<ElmahError> ElmahErrors { get; set; }
+        public DbSet<CloudFile> Files { get; set; }
+        public DbSet<CloudFileShared> SharedFiles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<ElmahError> ElmahErrors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

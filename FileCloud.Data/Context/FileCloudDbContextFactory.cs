@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace FileCloud.Data
+namespace FileCloud.Data.Context
 {
     public class FileCloudDbContextFactory : IDesignTimeDbContextFactory<FileCloudDbContext>
     {

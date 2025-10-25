@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using FileCloud.DomainLogic.DTOs;
 using FileCloud.Domain;
+using FileCloud.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
