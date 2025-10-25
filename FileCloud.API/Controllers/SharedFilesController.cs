@@ -9,6 +9,7 @@ namespace FileCloud.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class SharedFilesController : ControllerBase
     {
         private readonly FileCloud.DomainLogic.Interfaces.IService<CloudFileShared> _sharedFileService;
