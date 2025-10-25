@@ -1,0 +1,39 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+# Packages
+packages/
+# Test results
+TestResults/
+
+# Others
+*.swp
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# Rider
+.idea/
+*.sln.iml
+
+# Elmah
+elmah.xml
+elmah-errors.xml
