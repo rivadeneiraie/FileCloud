@@ -41,6 +41,12 @@ namespace FileCloud.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Ejecutar el seeder de Identity
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var serviceProvider = scope.ServiceProvider;
+                FileCloud.Data.Seeds.IdentitySeeder.SeedAsync(serviceProvider).GetAwaiter().GetResult();
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

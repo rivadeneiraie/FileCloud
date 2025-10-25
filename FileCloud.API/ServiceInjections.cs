@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using FileCloud.DomainLogic.Interfaces;
 using FileCloud.DomainLogic.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace FileCloud.API
 {
@@ -17,8 +18,9 @@ namespace FileCloud.API
         {
             services.AddDbContext<FileCloud.Data.FileCloudDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentityCore<Microsoft.AspNetCore.Identity.IdentityUser>()
-                .AddEntityFrameworkStores<FileCloud.Data.FileCloudDbContext>();
+            services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, Microsoft.AspNetCore.Identity.IdentityRole>()
+                .AddEntityFrameworkStores<FileCloud.Data.FileCloudDbContext>()
+                .AddDefaultTokenProviders();
             return services;
         }
     }
