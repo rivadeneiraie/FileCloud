@@ -42,6 +42,32 @@ namespace FileCloud.API.Controllers
             return Ok(dto);
         }
 
+        // GET: api/files/download/{id}
+        [HttpGet("download/{id}")]
+        public async Task<IActionResult> DownloadFile(Guid id)
+        {
+            var file = await _cloudFileService.GetByIdAsync(id);
+            if (file == null)
+            {
+                return NotFound();
+            }
+
+            var filePath = file.Path;
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("File not found on the server.");
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/octet-stream", file.FileName);
+        }
+
         // POST: api/files
         [HttpPost]
         [Consumes("multipart/form-data")]

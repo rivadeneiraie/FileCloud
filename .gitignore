@@ -37,3 +37,6 @@ TestResults/
 # Elmah
 elmah.xml
 elmah-errors.xml
+
+# Uploads folder in API
+FileCloud.API/Uploads/
