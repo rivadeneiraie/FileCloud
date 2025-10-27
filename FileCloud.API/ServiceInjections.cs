@@ -4,6 +4,7 @@ using FileCloud.DomainLogic.Interfaces;
 using FileCloud.DomainLogic.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using FileCloud.DomainLogic.BusinessLogic;
 
 namespace FileCloud.API
 {
@@ -13,6 +14,7 @@ namespace FileCloud.API
         {
             services.AddScoped(typeof(IService<>), typeof(Service<>));
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
 
@@ -23,6 +25,13 @@ namespace FileCloud.API
             services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, Microsoft.AspNetCore.Identity.IdentityRole>()
                 .AddEntityFrameworkStores<FileCloud.Data.Context.FileCloudDbContext>()
                 .AddDefaultTokenProviders();
+            return services;
+        }
+
+        public static IServiceCollection AddBusinessLogicServices(this IServiceCollection services)
+        {
+            services.AddScoped<IFileBusinessLogic, FileBusinessLogic>();
+            // Agregar otros servicios de lógica de negocio aquí
             return services;
         }
     }

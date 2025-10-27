@@ -33,6 +33,7 @@ namespace FileCloud.API
 
             // Registrar servicios de dominio
             ServiceInjections.AddDomainServices(services);
+            ServiceInjections.AddBusinessLogicServices(services);
 
             // Registrar ElmahCore con almacenamiento en SQL Server y dashboard en /elmah
             services.AddElmah<ElmahCore.Sql.SqlErrorLog>(options =>

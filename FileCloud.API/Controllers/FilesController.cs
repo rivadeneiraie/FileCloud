@@ -1,9 +1,12 @@
 using FileCloud.Data;
 using FileCloud.Domain;
 using FileCloud.API.DTOs;
+using FileCloud.DomainLogic.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace FileCloud.API.Controllers
 {
@@ -13,9 +16,11 @@ namespace FileCloud.API.Controllers
     public class FilesController : ControllerBase
     {
         private readonly FileCloud.DomainLogic.Interfaces.IService<CloudFile> _cloudFileService;
-        public FilesController(FileCloud.DomainLogic.Interfaces.IService<CloudFile> cloudFileService)
+        private readonly FileCloud.DomainLogic.Interfaces.IFileBusinessLogic _fileBusinessLogic;
+        public FilesController(FileCloud.DomainLogic.Interfaces.IService<CloudFile> cloudFileService, FileCloud.DomainLogic.Interfaces.IFileBusinessLogic fileBusinessLogic)
         {
             _cloudFileService = cloudFileService;
+            _fileBusinessLogic = fileBusinessLogic;
         }
 
         // GET: api/files
@@ -39,9 +44,10 @@ namespace FileCloud.API.Controllers
 
         // POST: api/files
         [HttpPost]
-        public async Task<IActionResult> CreateFile([FromBody] CloudFileDto dto)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateFile([FromForm] FileUploadRequest request)
         {
-            var created = await _cloudFileService.CreateAsync(dto.ToEntity());
+            var created = await _fileBusinessLogic.UploadFileAsync(request);
             var resultDto = new CloudFileDto(created);
             return CreatedAtAction(nameof(GetFile), new { id = resultDto.Id }, resultDto);
         }

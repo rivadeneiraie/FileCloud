@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using FileCloud.Domain.Constants;
 
 namespace FileCloud.Data.Seeds
 {
@@ -10,7 +11,16 @@ namespace FileCloud.Data.Seeds
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var roles = new[] { "USER_CREATE", "USER_UPDATE", "USER_DELETE" };
+            var roles = new[] {
+                RoleConstants.AdminUserCreate,
+                RoleConstants.AdminUserUpdate,
+                RoleConstants.AdminUserDelete,
+                RoleConstants.UserFileUpload,
+                RoleConstants.UserFileDownload,
+                RoleConstants.UserFileDelete,
+                RoleConstants.UserSharedFileCreate,
+                RoleConstants.UserSharedFileRevoke
+            };
             foreach (var role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
