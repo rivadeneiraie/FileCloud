@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
+  <data name="InvalidOrExpiredRefreshToken" xml:space="preserve">
+    <value>Invalid or expired refresh token</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found</value>
+  </data>
+  <data name="UserIdCannotBeNullOrEmpty" xml:space="preserve">
+    <value>User ID cannot be null or empty.</value>
+  </data>
+</root>

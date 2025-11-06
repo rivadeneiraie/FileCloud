@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Hello" xml:space="preserve">
+    <value>Hola</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Credenciales inválidas</value>
+  </data>
+  <data name="InvalidOrExpiredRefreshToken" xml:space="preserve">
+    <value>El token es inválido o ya expiró</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Usuario no encontrado</value>
+  </data>
+  <data name="UserIdCannotBeNullOrEmpty" xml:space="preserve">
+    <value>El id del usuario no puede ser nulo o vacío.</value>
+  </data>
+</root>

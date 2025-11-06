@@ -28,6 +28,10 @@ namespace FileCloud.API
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            // Registrar servicios de localización
+            ServiceInjections.AddTranslateServices(services);
+
             // Registrar DbContext e Identity
             ServiceInjections.AddDataServices(services, Configuration);
 
@@ -99,6 +103,13 @@ namespace FileCloud.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Configurar los middlewares de localización
+            var supportedCultures = new[] { "es", "en" };
+            var localizationOptions = new Microsoft.AspNetCore.Builder.RequestLocalizationOptions()
+                .SetDefaultCulture("es")
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+            app.UseRequestLocalization(localizationOptions);
             // Ejecutar el seeder de Identity
             using (var scope = app.ApplicationServices.CreateScope())
             {
@@ -135,10 +146,8 @@ namespace FileCloud.API
 
             // Habilitar ElmahCore en /elmah
             app.UseElmah();
-
             app.UseSwagger();
             app.UseSwaggerUI();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

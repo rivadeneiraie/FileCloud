@@ -16,19 +16,25 @@ namespace FileCloud.DomainLogic.Services
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IService<RefreshToken> _refreshTokenService;
+        private readonly Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> _localizer;
 
-        public AccountService(UserManager<IdentityUser> userManager, IConfiguration configuration, IService<RefreshToken> refreshTokenService)
+        public AccountService(
+            UserManager<IdentityUser> userManager,
+            IConfiguration configuration,
+            IService<RefreshToken> refreshTokenService,
+            Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> localizer)
         {
             _userManager = userManager;
             _configuration = configuration;
             _refreshTokenService = refreshTokenService;
+            _localizer = localizer;
         }
 
         public async Task<(string AccessToken, string RefreshToken)> LoginAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, password))
-                throw new UnauthorizedAccessException("Invalid credentials");
+                throw new UnauthorizedAccessException(_localizer["InvalidCredentials"]);
 
             var roles = await _userManager.GetRolesAsync(user);
             var token = JwtHelper.GenerateToken(user, roles, _configuration);
