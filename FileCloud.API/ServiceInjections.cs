@@ -24,6 +24,7 @@ namespace FileCloud.API
                 services.AddScoped(typeof(IService<>), typeof(Service<>));
                 services.AddScoped<IAccountService, AccountService>();
                 services.AddScoped<IUserService, UserService>();
+                services.AddScoped<ICloudFileService, CloudFileService>();
                 return services;
             }
 

@@ -74,7 +74,8 @@ namespace FileCloud.DomainLogic.BusinessLogic
                 Path = filePath,
                 Hash = fileHash, // Asignar el hash generado
                 UploadDate = DateTime.UtcNow,
-                UserId = userId // Usar el ID del usuario logueado
+                UserId = userId, // Usar el ID del usuario logueado
+                IsPublic = request.IsPublic
             };
 
             // Insertar el archivo en la base de datos

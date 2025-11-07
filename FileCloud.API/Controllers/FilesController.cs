@@ -18,13 +18,16 @@ namespace FileCloud.API.Controllers
         private readonly FileCloud.DomainLogic.Interfaces.IService<CloudFile> _cloudFileService;
         private readonly FileCloud.DomainLogic.Interfaces.IFileBusinessLogic _fileBusinessLogic;
         private readonly Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> _localizer;
+        private readonly FileCloud.DomainLogic.Interfaces.ICloudFileService _cloudFilePublicService;
         public FilesController(FileCloud.DomainLogic.Interfaces.IService<CloudFile> cloudFileService,
             FileCloud.DomainLogic.Interfaces.IFileBusinessLogic fileBusinessLogic,
-            Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> localizer)
+            Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> localizer,
+            FileCloud.DomainLogic.Interfaces.ICloudFileService cloudFilePublicService)
         {
             _cloudFileService = cloudFileService;
             _fileBusinessLogic = fileBusinessLogic;
             _localizer = localizer;
+            _cloudFilePublicService = cloudFilePublicService;
         }
 
         // GET: api/files
@@ -33,6 +36,15 @@ namespace FileCloud.API.Controllers
         {
             var files = await _cloudFileService.GetAllAsync();
             var dtos = files.Select(f => new CloudFileDto(f));
+            return Ok(dtos);
+        }
+
+        // GET: api/files/public
+        [HttpGet("public")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPublicFiles()
+        {
+            var dtos = await _cloudFilePublicService.GetAllPublicAsync();
             return Ok(dtos);
         }
 
