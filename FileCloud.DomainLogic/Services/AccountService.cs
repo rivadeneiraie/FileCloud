@@ -55,11 +55,11 @@ namespace FileCloud.DomainLogic.Services
             var allTokens = await _refreshTokenService.GetAllAsync();
             var storedToken = allTokens.FirstOrDefault(rt => rt.Token == refreshTokenValue);
             if (storedToken == null || storedToken.IsRevoked || storedToken.ExpiryDate < DateTime.UtcNow)
-                throw new UnauthorizedAccessException("Invalid or expired refresh token");
+                throw new UnauthorizedAccessException(_localizer["InvalidOrExpiredRefreshToken"]); 
 
             var user = await _userManager.FindByIdAsync(storedToken.UserId);
             if (user == null)
-                throw new UnauthorizedAccessException("User not found");
+                throw new UnauthorizedAccessException(_localizer["UserNotFound"]);
 
             var roles = await _userManager.GetRolesAsync(user);
             var newAccessToken = JwtHelper.GenerateToken(user, roles, _configuration);

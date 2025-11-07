@@ -17,10 +17,14 @@ namespace FileCloud.API.Controllers
     {
         private readonly FileCloud.DomainLogic.Interfaces.IService<CloudFile> _cloudFileService;
         private readonly FileCloud.DomainLogic.Interfaces.IFileBusinessLogic _fileBusinessLogic;
-        public FilesController(FileCloud.DomainLogic.Interfaces.IService<CloudFile> cloudFileService, FileCloud.DomainLogic.Interfaces.IFileBusinessLogic fileBusinessLogic)
+        private readonly Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> _localizer;
+        public FilesController(FileCloud.DomainLogic.Interfaces.IService<CloudFile> cloudFileService,
+            FileCloud.DomainLogic.Interfaces.IFileBusinessLogic fileBusinessLogic,
+            Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> localizer)
         {
             _cloudFileService = cloudFileService;
             _fileBusinessLogic = fileBusinessLogic;
+            _localizer = localizer;
         }
 
         // GET: api/files
@@ -55,7 +59,7 @@ namespace FileCloud.API.Controllers
             var filePath = file.Path;
             if (!System.IO.File.Exists(filePath))
             {
-                return NotFound("File not found on the server.");
+                return NotFound(_localizer["FileNotFoundOnServer"]);
             }
 
             var memory = new MemoryStream();

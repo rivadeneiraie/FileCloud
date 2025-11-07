@@ -15,4 +15,7 @@
   <data name="UserIdCannotBeNullOrEmpty" xml:space="preserve">
     <value>El id del usuario no puede ser nulo o vacío.</value>
   </data>
+  <data name="FileNotFoundOnServer" xml:space="preserve">
+    <value>El archivo no se encontró en el servidor.</value>
+  </data>
 </root>

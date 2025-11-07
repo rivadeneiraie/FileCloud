@@ -15,11 +15,14 @@ namespace FileCloud.DomainLogic.BusinessLogic
     {
         private readonly DomainLogic.Interfaces.IService<CloudFile> _cloudFileService;
         private readonly IUserService _userService;
+        private readonly Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> _localizer;
 
-        public FileBusinessLogic(DomainLogic.Interfaces.IService<CloudFile> cloudFileService, IUserService userService)
+        public FileBusinessLogic(DomainLogic.Interfaces.IService<CloudFile> cloudFileService, IUserService userService,
+            Microsoft.Extensions.Localization.IStringLocalizer<FileCloud.DomainLogic.Resources.Resources> localizer)
         {
             _cloudFileService = cloudFileService;
             _userService = userService;
+            _localizer = localizer;
         }
 
         private string GenerateFilePath(string fileName)
@@ -27,8 +30,9 @@ namespace FileCloud.DomainLogic.BusinessLogic
             var yearMonthFolder = DateTime.UtcNow.ToString("yyyyMM");
             var fullPath = Path.Combine("Uploads", yearMonthFolder, fileName);
 
+
             var directory = Path.GetDirectoryName(fullPath);
-            if (!Directory.Exists(directory))
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
@@ -59,7 +63,7 @@ namespace FileCloud.DomainLogic.BusinessLogic
             var userId = currentUser?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
             {
-                throw new InvalidOperationException("User ID cannot be null or empty.");
+                throw new InvalidOperationException(_localizer["UserIdCannotBeNullOrEmpty"]);
             }
 
             // Crear una nueva instancia de CloudFile y setear los valores
