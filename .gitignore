@@ -40,3 +40,47 @@ elmah-errors.xml
 
 # Uploads folder in API
 FileCloud.API/Uploads/
+
+# --- Next.js & Node.js (de filecloud.web)
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+
+# dependencies
+filecloud.web/node_modules
+filecloud.web/.pnp
+filecloud.web/.pnp.*
+filecloud.web/.yarn/*
+!filecloud.web/.yarn/patches
+!filecloud.web/.yarn/plugins
+!filecloud.web/.yarn/releases
+!filecloud.web/.yarn/versions
+
+# testing
+filecloud.web/coverage
+
+# next.js
+filecloud.web/.next/
+filecloud.web/out/
+
+# production
+filecloud.web/build
+
+# misc
+filecloud.web/.DS_Store
+filecloud.web/*.pem
+
+# debug
+filecloud.web/npm-debug.log*
+filecloud.web/yarn-debug.log*
+filecloud.web/yarn-error.log*
+filecloud.web/.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+filecloud.web/.env*
+
+# vercel
+filecloud.web/.vercel
+
+# typescript
+filecloud.web/*.tsbuildinfo
+filecloud.web/next-env.d.ts
