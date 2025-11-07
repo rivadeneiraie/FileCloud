@@ -10,5 +10,6 @@ namespace FileCloud.Domain
         public required string Hash { get; set; }
         public DateTime UploadDate { get; set; }
         public required string UserId { get; set; } // FK to AspNetUsers
+        public bool IsPublic { get; set; }
     }
 }
