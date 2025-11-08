@@ -71,6 +71,17 @@ namespace FileCloud.API
                 };
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
             // Configurar Swagger para aceptar JWT
             services.AddSwaggerGen(c =>
             {
@@ -137,6 +148,8 @@ namespace FileCloud.API
                 app.UseHsts();
             }
 
+            app.UseCors("AllowAll");
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
