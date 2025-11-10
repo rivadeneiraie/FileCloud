@@ -1,4 +1,4 @@
-import { faSearch, faUser, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faUser, faRotateRight, faSort, faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FileDTO } from "@/lib/services/FilesServices";
 import { useState } from "react";
@@ -10,32 +10,58 @@ type DataTableProps = {
   query?: string;
   loadFiles: () => void;
 };
+
 export default function DataTable({ loading, error, files, query, loadFiles }: DataTableProps) {
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-    const [pageSize, setPageSize] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
+  const handleSort = (column: string) => {
+    if (sortBy === column) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(column);
+      setSortOrder("asc");
+    }
+  };
 
-    const filteredFiles = (files && files.length && typeof query === "string" && query.length > 0)
-      ? files.filter(
-          (file) =>
-            file.fileName.toLowerCase().includes(query!) ||
-            file.uploadUser.toLowerCase().includes(query!)
-        )
-      : files;
-    const totalPages = Math.max(1, Math.ceil(filteredFiles.length / pageSize));
-    const paginatedFiles = filteredFiles.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  let sortedFiles = [...files];
+  if (sortBy) {
+    sortedFiles.sort((a, b) => {
+      let aValue = a[sortBy as keyof FileDTO];
+      let bValue = b[sortBy as keyof FileDTO];
+      if (sortBy === "uploadDate") {
+        aValue = new Date(aValue as string);
+        bValue = new Date(bValue as string);
+      }
+      if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+  }
 
-    const goToPage = (page: number) => {
-      setCurrentPage(page);
-    };
+  const filteredFiles = (sortedFiles && sortedFiles.length && typeof query === "string" && query.length > 0)
+    ? sortedFiles.filter(
+        (file) =>
+          file.fileName.toLowerCase().includes(query!.toLowerCase()) ||
+          file.uploadUser.toLowerCase().includes(query!.toLowerCase())
+      )
+    : sortedFiles;
+  const totalPages = Math.max(1, Math.ceil(filteredFiles.length / pageSize));
+  const paginatedFiles = filteredFiles.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
-    const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setPageSize(Number(e.target.value));
-      setCurrentPage(1);
-    };
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+  };
 
-    return (    
-        <div className="bg-surface rounded-lg shadow-lg w-full p-4">
+  const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPageSize(Number(e.target.value));
+    setCurrentPage(1);
+  };
+
+  return (
+    <div className="bg-surface rounded-lg shadow-lg w-full p-4">
           <div className="mb-2 flex items-center">
             <label htmlFor="pageSize" className="mr-2 text-primary">Registros por página:</label>
             <select
@@ -52,9 +78,30 @@ export default function DataTable({ loading, error, files, query, loadFiles }: D
           <table className="min-w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 text-left font-semibold text-primary">Nombre</th>
-                <th className="px-4 py-3 text-left font-semibold text-primary">Fecha</th>
-                <th className="px-4 py-3 text-left font-semibold text-primary">Usuario</th>
+                <th className="px-4 py-3 text-left font-semibold text-primary cursor-pointer" onClick={() => handleSort("fileName")}> 
+                  <span className="flex items-center">Nombre
+                    <FontAwesomeIcon
+                      icon={sortBy === "fileName" ? (sortOrder === "asc" ? faSortUp : faSortDown) : faSort}
+                      className="ml-2"
+                    />
+                  </span>
+                </th>
+                <th className="px-4 py-3 text-left font-semibold text-primary cursor-pointer" onClick={() => handleSort("uploadDate")}> 
+                  <span className="flex items-center">Fecha
+                    <FontAwesomeIcon
+                      icon={sortBy === "uploadDate" ? (sortOrder === "asc" ? faSortUp : faSortDown) : faSort}
+                      className="ml-2"
+                    />
+                  </span>
+                </th>
+                <th className="px-4 py-3 text-left font-semibold text-primary cursor-pointer" onClick={() => handleSort("uploadUser")}> 
+                  <span className="flex items-center">Usuario
+                    <FontAwesomeIcon
+                      icon={sortBy === "uploadUser" ? (sortOrder === "asc" ? faSortUp : faSortDown) : faSort}
+                      className="ml-2"
+                    />
+                  </span>
+                </th>
               </tr>
             </thead>
             <tbody>
