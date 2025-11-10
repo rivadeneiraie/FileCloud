@@ -1,13 +1,15 @@
 "use client";
 
-import { faSearch, faUser, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthStore } from "@/lib/store/authStore";
 import { getPublicFiles, FileDTO } from "@/lib/services/FilesServices";
 import Logo from "@/components/layout/Logo";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-
+import DataTable from "@/components/common/DataTable";
+import SearchBar from "@/components/common/SearchBar";
 
 export default function Home() {
   const router = useRouter();
@@ -20,6 +22,7 @@ export default function Home() {
 
   const loadFiles = async () => {
     try {
+      setLoading(true);
       const data = await getPublicFiles();
       setFiles(data);
     } catch (err) {
@@ -33,18 +36,14 @@ export default function Home() {
     loadFiles();
   }, []);
 
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex items-center justify-between p-2">
         <Logo />
         <div className="w-1/3 flex items-center gap-2 relative">
-          <div className="flex-1 bg-surface rounded-lg shadow-lg flex items-center px-3 py-3">
-            <input
-              type="text"
-              placeholder="Buscar..."
-              className="w-full bg-transparent outline-none text-primary placeholder:text-primary"
-            />
-            <FontAwesomeIcon icon={faSearch} className="w-5 h-5 hover:text-primary" />
+          <div className="flex-1">
+            <SearchBar placeholder="Buscar..." />
           </div>
           <div>
             <FontAwesomeIcon
@@ -81,32 +80,13 @@ export default function Home() {
         </div>
       </div>
       <div className="grow flex px-4 pt-2 ">
-        <div className="bg-surface rounded-lg shadow-lg w-full p-4">
-          <table className="min-w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 text-left font-semibold text-primary">Nombre</th>
-                <th className="px-4 py-3 text-left font-semibold text-primary">Fecha</th>
-                <th className="px-4 py-3 text-left font-semibold text-primary">Usuario</th>
-              </tr>
-            </thead>
-            <tbody>
-              {files.map((file, idx) => (
-                <tr
-                  key={file.id}
-                  className={`transition border-b border-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100`}
-                >
-                  <td className="px-4 py-3 border-b border-gray-200">{file.fileName}</td>
-                  <td className="px-4 py-3 border-b border-gray-200">{new Date(file.uploadDate).toLocaleDateString()}</td>
-                  <td className="px-4 py-3 border-b border-gray-200">{file.uploadUser}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="flex justify-end">
-            <FontAwesomeIcon icon={faRotateRight} className="w-10 h-10 hover:text-primary cursor-pointer p-2" onClick={loadFiles} />
-          </div>
-        </div>
+        <DataTable
+          loading={loading}
+          error={error}
+          files={files}
+          query={useSearchParams().get("query")?.toLowerCase() || ""}
+          loadFiles={loadFiles}
+        />
       </div>
       <div className="flex items-center justify-center p-2">
          <span className="font-bold  ">Plataforma para subir archivos</span>
