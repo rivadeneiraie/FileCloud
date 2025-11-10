@@ -1,4 +1,7 @@
+"use client";
+
 import { Sixtyfour  } from "next/font/google";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const sixtyfour = Sixtyfour({   
@@ -7,8 +10,10 @@ const sixtyfour = Sixtyfour({
 });
 
 export default function Logo() {
+  const router = useRouter();
+
     return (
-       <div className="flex items-center space-x-2">
+       <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
         <Image
             src="/Icon.png"
             alt="Logo"

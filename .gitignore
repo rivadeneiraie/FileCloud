@@ -1,86 +1,45 @@
-# .NET
-bin/
-obj/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
 
-# Visual Studio Code
-.vscode/
+# --- BACKEND ---
+Backend/**/bin/
+Backend/**/obj/
+Backend/**/*.user
+Backend/**/*.suo
+Backend/**/*.userosscache
+Backend/**/*.sln.docstates
+Backend/**/*.nupkg
+Backend/**/packages/
+Backend/**/TestResults/
+Backend/**/*.swp
+Backend/**/*.tmp
+Backend/**/*.bak
+Backend/**/*.orig
+Backend/**/*.rej
+Backend/.idea/
+Backend/**/*.sln.iml
+Backend/FileCloud.API/Uploads/
+Backend/elmah.xml
+Backend/elmah-errors.xml
 
-# Logs
-*.log
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# NuGet
-*.nupkg
-# Packages
-packages/
-# Test results
-TestResults/
-
-# Others
-*.swp
-*.tmp
-*.bak
-*.orig
-*.rej
-
-# Rider
-.idea/
-*.sln.iml
-
-# Elmah
-elmah.xml
-elmah-errors.xml
-
-# Uploads folder in API
-FileCloud.API/Uploads/
-
-# --- Next.js & Node.js (de filecloud.web)
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-
-# dependencies
-filecloud.web/node_modules
-filecloud.web/.pnp
-filecloud.web/.pnp.*
-filecloud.web/.yarn/*
-!filecloud.web/.yarn/patches
-!filecloud.web/.yarn/plugins
-!filecloud.web/.yarn/releases
-!filecloud.web/.yarn/versions
-
-# testing
-filecloud.web/coverage
-
-# next.js
-filecloud.web/.next/
-filecloud.web/out/
-
-# production
-filecloud.web/build
-
-# misc
-filecloud.web/.DS_Store
-filecloud.web/*.pem
-
-# debug
-filecloud.web/npm-debug.log*
-filecloud.web/yarn-debug.log*
-filecloud.web/yarn-error.log*
-filecloud.web/.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-filecloud.web/.env*
-
-# vercel
-filecloud.web/.vercel
-
-# typescript
-filecloud.web/*.tsbuildinfo
-filecloud.web/next-env.d.ts
+# --- FRONTEND ---
+Frontend/filecloud.web/node_modules/
+Frontend/filecloud.web/.pnp
+Frontend/filecloud.web/.pnp.*
+Frontend/filecloud.web/.yarn/*
+!Frontend/filecloud.web/.yarn/patches
+!Frontend/filecloud.web/.yarn/plugins
+!Frontend/filecloud.web/.yarn/releases
+!Frontend/filecloud.web/.yarn/versions
+Frontend/filecloud.web/coverage/
+Frontend/filecloud.web/.next/
+Frontend/filecloud.web/out/
+Frontend/filecloud.web/build/
+Frontend/filecloud.web/.DS_Store
+Frontend/filecloud.web/*.pem
+Frontend/filecloud.web/npm-debug.log*
+Frontend/filecloud.web/yarn-debug.log*
+Frontend/filecloud.web/yarn-error.log*
+Frontend/filecloud.web/.pnpm-debug.log*
+Frontend/filecloud.web/.env*
+Frontend/filecloud.web/.vercel
+Frontend/filecloud.web/*.tsbuildinfo
+Frontend/filecloud.web/next-env.d.ts
