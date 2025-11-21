@@ -1,24 +1,15 @@
 "use client";
 
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuthStore } from "@/lib/store/authStore";
 import { getPublicFiles, FileDTO } from "@/lib/services/FilesServices";
-import Logo from "@/components/layout/Logo";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import DataTable from "@/components/common/DataTable";
-import SearchBar from "@/components/common/SearchBar";
+import CommonLayout from "@/components/layout/CommonLayout";
 
-export default function Home() {
-  const router = useRouter();
+export default function Index() {
   const [files, setFiles] = useState<FileDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const isLogin = useAuthStore().token !== null;
-  const logout = useAuthStore((state) => state.logout);
 
   const loadFiles = async () => {
     try {
@@ -36,50 +27,8 @@ export default function Home() {
     loadFiles();
   }, []);
 
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex items-center justify-between p-2">
-        <Logo />
-        <div className="w-1/3 flex items-center gap-2 relative">
-          <div className="flex-1">
-            <SearchBar placeholder="Buscar..." />
-          </div>
-          <div>
-            <FontAwesomeIcon
-              icon={faUser}
-              className="w-20 h-20 hover:text-primary cursor-pointer"
-              onClick={() => setMenuOpen((open) => !open)}
-            />
-            {menuOpen && (
-              <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg z-10 min-w-[120px]">
-                {!isLogin ? (
-                  <button
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => {
-                      router.push("/login");
-                      setMenuOpen(false);
-                    }}
-                  >
-                    Login
-                  </button>
-                ) : (
-                  <button
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => { 
-                      logout()
-                      setMenuOpen(false); 
-                    }}
-                  >
-                    Logout
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="grow flex px-4 pt-2 ">
+    <CommonLayout showPanel={false}>
         <DataTable
           loading={loading}
           error={error}
@@ -87,11 +36,7 @@ export default function Home() {
           query={useSearchParams().get("query")?.toLowerCase() || ""}
           loadFiles={loadFiles}
         />
-      </div>
-      <div className="flex items-center justify-center p-2">
-         <span className="font-bold  ">Plataforma para subir archivos</span>
-      </div>
-    </div>
+    </CommonLayout>
   );
 }
  
