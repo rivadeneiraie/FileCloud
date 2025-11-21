@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import Cookies from "js-cookie";
 import { Roles } from "../constants/roles";
 
 type RoleType = typeof Roles[keyof typeof Roles];
@@ -23,11 +24,17 @@ export const useAuthStore = create<AuthState>()(
       refreshToken: null,
       role: null,
       email: "Unknown",
-      setToken: (token) => set({ token }),
+      setToken: (token) => {
+          set({ token });
+          token && Cookies.set("token", token, { sameSite: "strict" });
+      },
       setRefreshToken: (refreshToken) => set({ refreshToken }),
       setRole: (role) => set({ role }),
       setEmail: (email) => set({ email }),
-      logout: () => set({ token: null, refreshToken: null, role: null, email: null }),
+      logout: () => {
+          set({ token: null, refreshToken: null, role: null, email: null })
+          Cookies.remove("token");
+      },
     }),
     {
       name: "auth-storage", 

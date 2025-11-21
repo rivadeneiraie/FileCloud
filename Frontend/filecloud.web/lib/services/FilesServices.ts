@@ -10,3 +10,7 @@ export interface FileDTO {
 export async function getPublicFiles() {
   return fetchClient<FileDTO[]>("Files/public");
 }
+
+export async function getUserFiles() {
+  return fetchClient<FileDTO[]>("Files/user");
+}

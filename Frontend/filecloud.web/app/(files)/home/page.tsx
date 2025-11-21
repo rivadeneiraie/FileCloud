@@ -1,7 +1,7 @@
 "use client";
 
 import DataTable from "@/components/common/DataTable";
-import { FileDTO, getPublicFiles } from "@/lib/services/FilesServices";
+import { FileDTO, getUserFiles } from "@/lib/services/FilesServices";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,7 +14,7 @@ export default function Home() {
   const loadFiles = async () => {
     try {
       setLoading(true);
-      const data = await getPublicFiles();
+      const data = await getUserFiles();
       setFiles(data);
     } catch (err) {
       setError("Error al cargar los archivos");

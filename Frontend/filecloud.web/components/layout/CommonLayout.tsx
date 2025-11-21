@@ -61,6 +61,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
                     onClick={() => {
                       logout();
                       setMenuOpen(false);
+                      router.push("/login");   
                     }}
                   >
                     Logout
