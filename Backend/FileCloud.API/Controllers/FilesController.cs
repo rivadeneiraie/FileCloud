@@ -48,6 +48,14 @@ namespace FileCloud.API.Controllers
             return Ok(dtos);
         }
 
+        // GET: api/files/user
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUserFiles()
+        {
+            var dtos = await _cloudFilePublicService.GetAllUserAsync();
+            return Ok(dtos);
+        }
+
         // GET: api/files/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFile(Guid id)

@@ -2,11 +2,10 @@
   "folders": [
     {
       "name": "Backend",
-      "path": "./Backend"
+      "path": "Backend"
     },
     {
-      "name": "Frontend",
-      "path": "./Frontend/FileCloud.web"
+      "path": "Frontend"
     }
   ],
   "settings": {

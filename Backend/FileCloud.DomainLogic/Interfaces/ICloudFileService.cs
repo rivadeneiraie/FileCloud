@@ -8,5 +8,6 @@ namespace FileCloud.DomainLogic.Interfaces
     public interface ICloudFileService
     {
         Task<List<DTOs.CloudFilePublicDto>> GetAllPublicAsync();
+        Task<List<DTOs.CloudFilePublicDto>> GetAllUserAsync();
     }
 }
