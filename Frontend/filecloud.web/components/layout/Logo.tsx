@@ -1,0 +1,27 @@
+"use client";
+
+import { Sixtyfour  } from "next/font/google";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+const sixtyfour = Sixtyfour({   
+  subsets: ["latin"],
+  weight: "400", 
+});
+
+export default function Logo() {
+  const router = useRouter();
+
+    return (
+       <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
+        <Image
+            src="/Icon.png"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="rounded"
+          />
+          <span className={`${sixtyfour.className} text-xl font-semibold text-primary`}>FileCloud</span>
+       </div>
+    );
+}   

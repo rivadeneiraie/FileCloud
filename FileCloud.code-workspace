@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "Backend",
+      "path": "Backend"
+    },
+    {
+      "path": "Frontend"
+    }
+  ],
+  "settings": {
+    // 🔧 Configuraciones opcionales para comodidad
+    "files.exclude": {
+      "**/bin": true,
+      "**/obj": true,
+      "**/node_modules": true
+    },
+    // C# Dev Kit detecta automáticamente la solución en la raíz
+    "dotnet.defaultSolution": "FileCloud.sln"
+  }
+}
