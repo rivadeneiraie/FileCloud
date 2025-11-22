@@ -2,16 +2,21 @@ export interface FetchOptions extends RequestInit {
   baseUrl?: string;
 }
 
+
 import { useAuthStore } from "@/lib/store/authStore";
+import { postRefreshToken } from "@/lib/services/AccountServices";
 
 export async function fetchClient<T>(
   endpoint: string,
-  options: FetchOptions = {}
+  options: FetchOptions = {},
+  retry = true
 ): Promise<T> {
-
   let token: string | null = null;
+  let refreshToken: string | null = null;
   try {
-    token = typeof window !== "undefined" ? useAuthStore.getState().token : null;
+    const state = typeof window !== "undefined" ? useAuthStore.getState() : null;
+    token = state?.token ?? null;
+    refreshToken = state?.refreshToken ?? null;
   } catch {}
 
   const { baseUrl = process.env.NEXT_PUBLIC_API_URL, headers, ...rest } = options;
@@ -27,6 +32,21 @@ export async function fetchClient<T>(
     headers: mergedHeaders,
     ...rest,
   });
+
+  if (res.status === 401 && retry && refreshToken) {
+
+    try {
+      const refreshed = await postRefreshToken(refreshToken);
+      useAuthStore.getState().setToken(refreshed.accessToken);
+      useAuthStore.getState().setRefreshToken(refreshed.refreshToken);
+
+      return fetchClient<T>(endpoint, options, false);
+
+    } catch (refreshError) {
+
+      throw new Error("No autorizado y no se pudo refrescar el token");
+    }
+  }
 
   if (!res.ok) {
     const message = await res.text();

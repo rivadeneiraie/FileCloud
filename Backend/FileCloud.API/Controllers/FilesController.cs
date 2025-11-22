@@ -1,12 +1,8 @@
-using FileCloud.Data;
 using FileCloud.Domain;
 using FileCloud.API.DTOs;
 using FileCloud.DomainLogic.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 
 namespace FileCloud.API.Controllers
 {

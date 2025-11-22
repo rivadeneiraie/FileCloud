@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
-using FileCloud.DomainLogic.DTOs;
 using FileCloud.DomainLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FileCloud.API.Controllers
 {
@@ -38,6 +34,7 @@ namespace FileCloud.API.Controllers
             }
 
             [HttpPost("refresh")]
+            [AllowAnonymous]
             public async Task<IActionResult> Refresh([FromBody] FileCloud.DomainLogic.DTOs.RefreshTokenRequest model)
             {
                 try
