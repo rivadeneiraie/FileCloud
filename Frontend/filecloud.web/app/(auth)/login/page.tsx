@@ -1,12 +1,15 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { postLogin } from "@/lib/services/AccountServices";
 import { useAuthStore } from "@/lib/store/authStore"; 
 import { z } from "zod";
 import { decodeToken } from "@/lib/helpers/decodeToken";
 
 export default function Login() {
+
+  const router = useRouter();
 
   const schema = z.object({
     email: z.string().email("Email inválido"),
@@ -40,6 +43,9 @@ export default function Login() {
       useAuthStore.getState().setRole(payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
 
       setSuccess("¡Login exitoso!");
+      setTimeout(() => {
+        router.push("/home");
+      }, 1000);
 
     } catch (err: any) {
       setError(err.message || "Error al iniciar sesión");
