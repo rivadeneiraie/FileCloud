@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "@/components/layout/Logo";
 import SearchBar from "@/components/common/SearchBar";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/lib/helpers/useTranslation";
 import { useAuthStore } from "@/lib/store/authStore";
 
 export default function CommonLayout({ children, showPanel = true }: { children: React.ReactNode; showPanel?: boolean }) {
@@ -24,7 +25,9 @@ export default function CommonLayout({ children, showPanel = true }: { children:
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
   const router = useRouter();
+  const { t } = useTranslation();
   const isLogin = useAuthStore().token !== null;
   const logout = useAuthStore((state) => state.logout);
 
@@ -35,7 +38,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
         <Logo />
         <div className="w-1/3 flex items-center gap-2 relative">
           <div className="flex-1">
-            <SearchBar placeholder="Buscar..." />
+            <SearchBar placeholder={t("search")} />
           </div>
           <div>
             <FontAwesomeIcon
@@ -53,7 +56,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
                       setMenuOpen(false);
                     }}
                   >
-                    Login
+                    {t("login")}
                   </button>
                 ) : (
                   <button
@@ -64,7 +67,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
                       router.push("/login");   
                     }}
                   >
-                    Logout
+                    {t("logout")}
                   </button>
                 )}
               </div>
@@ -95,7 +98,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
             onClick={() => setSidebarOpen((open) => !open)}
             style={{ transform: sidebarOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
             tabIndex={0}
-            aria-label="Expandir o contraer menú"
+            aria-label={t("toggle_menu")}
           >
             <FontAwesomeIcon icon={faPlay} className="w-6 h-6" />
           </button>
@@ -111,7 +114,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
             >
               <FontAwesomeIcon icon={faHouse} className="w-6 h-6 text-primary cursor-pointer" />
               {sidebarOpen && 
-                  <span className="ml-3 text-primary font-semibold">Home</span>
+                  <span className="ml-3 text-primary font-semibold">{t("home")}</span>
               }
             </button>
             {/* Subir archivo */}
@@ -124,7 +127,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
             >
               <FontAwesomeIcon icon={faUpload} className="w-6 h-6 text-primary cursor-pointer" />
               {sidebarOpen && 
-                  <span className="ml-3 text-primary font-semibold">Subir archivo</span>
+                  <span className="ml-3 text-primary font-semibold">{t("upload_file")}</span>
               }
             </button>
             {/* Público */}
@@ -137,7 +140,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
             >
               <FontAwesomeIcon icon={faUser} className="w-6 h-6 text-primary cursor-pointer" />
               {sidebarOpen && 
-                  <span className="ml-3 text-primary font-semibold">Público</span>
+                  <span className="ml-3 text-primary font-semibold">{t("public")}</span>
               }
             </button>
           </div>
@@ -147,7 +150,7 @@ export default function CommonLayout({ children, showPanel = true }: { children:
         <div className="grow flex">{children}</div>
       </div>
       <div className="flex items-center justify-center p-2">
-        <span className="font-bold">Plataforma para subir archivos</span>
+        <span className="font-bold">{t("platform_upload")}</span>
       </div>
     </div>
   );

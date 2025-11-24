@@ -2,6 +2,7 @@ import { faSearch, faUser, faRotateRight, faSort, faSortUp, faSortDown } from "@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FileDTO } from "@/lib/services/FilesServices";
 import { useState } from "react";
+import { useTranslation } from "@/lib/helpers/useTranslation";
 
 type DataTableProps = {
   loading: boolean;
@@ -13,6 +14,7 @@ type DataTableProps = {
 
 export default function DataTable({ loading, error, files, query, loadFiles }: DataTableProps) {
   const [pageSize, setPageSize] = useState(10);
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -63,7 +65,7 @@ export default function DataTable({ loading, error, files, query, loadFiles }: D
   return (
     <div className="bg-surface rounded-lg shadow-lg w-full p-4">
           <div className="mb-2 flex items-center">
-            <label htmlFor="pageSize" className="mr-2 text-primary">Registros por página:</label>
+            <label htmlFor="pageSize" className="mr-2 text-primary">{t("records_per_page")}</label>
             <select
               id="pageSize"
               value={pageSize}
@@ -79,7 +81,7 @@ export default function DataTable({ loading, error, files, query, loadFiles }: D
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 text-left font-semibold text-primary cursor-pointer" onClick={() => handleSort("fileName")}> 
-                  <span className="flex items-center">Nombre
+                  <span className="flex items-center">{t("name")}
                     <FontAwesomeIcon
                       icon={sortBy === "fileName" ? (sortOrder === "asc" ? faSortUp : faSortDown) : faSort}
                       className="ml-2"
@@ -87,7 +89,7 @@ export default function DataTable({ loading, error, files, query, loadFiles }: D
                   </span>
                 </th>
                 <th className="px-4 py-3 text-left font-semibold text-primary cursor-pointer" onClick={() => handleSort("uploadDate")}> 
-                  <span className="flex items-center">Fecha
+                  <span className="flex items-center">{t("date")}
                     <FontAwesomeIcon
                       icon={sortBy === "uploadDate" ? (sortOrder === "asc" ? faSortUp : faSortDown) : faSort}
                       className="ml-2"
@@ -95,7 +97,7 @@ export default function DataTable({ loading, error, files, query, loadFiles }: D
                   </span>
                 </th>
                 <th className="px-4 py-3 text-left font-semibold text-primary cursor-pointer" onClick={() => handleSort("uploadUser")}> 
-                  <span className="flex items-center">Usuario
+                  <span className="flex items-center">{t("user")}
                     <FontAwesomeIcon
                       icon={sortBy === "uploadUser" ? (sortOrder === "asc" ? faSortUp : faSortDown) : faSort}
                       className="ml-2"

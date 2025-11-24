@@ -1,0 +1,20 @@
+{
+  "search": "Search...",
+  "login": "Login",
+  "logout": "Logout",
+  "toggle_menu": "Expand or collapse menu",
+  "home": "Home",
+  "upload_file": "Upload file",
+  "public": "Public",
+  "platform_upload": "Platform to upload files",
+  "records_per_page": "Records per page:",
+  "name": "Name",
+  "date": "Date",
+  "user": "User",
+  "invalid_email": "Invalid email",
+  "password_min": "Password must be at least 6 characters",
+  "validation_error": "Validation error",
+  "welcome": "Welcome to FileCloud!",
+  "login_action": "Login",
+  "load_files_error": "Error loading files"
+}

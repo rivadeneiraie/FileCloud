@@ -5,15 +5,18 @@ import { useRouter } from "next/navigation";
 import { postLogin } from "@/lib/services/AccountServices";
 import { useAuthStore } from "@/lib/store/authStore"; 
 import { z } from "zod";
+import { useTranslation } from "@/lib/helpers/useTranslation";
 import { decodeToken } from "@/lib/helpers/decodeToken";
 
+
 export default function Login() {
+  const { t } = useTranslation();
 
   const router = useRouter();
 
   const schema = z.object({
-    email: z.string().email("Email inválido"),
-    password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+    email: z.string().email(t("invalid_email")),
+    password: z.string().min(6, t("password_min")),
   });
 
   const [email, setEmail] = React.useState("");
@@ -27,7 +30,7 @@ export default function Login() {
 
     const result = schema.safeParse({ email, password });
     if (!result.success) {
-      const firstError = result.error.issues[0]?.message || "Error de validación";
+      const firstError = result.error.issues[0]?.message || t("validation_error");
       setError(firstError);
       return;
     }
@@ -55,7 +58,7 @@ export default function Login() {
   return (
     <div className="grow flex items-center justify-center">
       <div className="bg-surface rounded-xl shadow-lg p-8 max-w-sm w-full flex flex-col items-center">
-        <h2 className="text-primary text-2xl font-bold mb-4">¡Bienvenido a FileCloud!</h2>
+        <h2 className="text-primary text-2xl font-bold mb-4">{t("welcome")}</h2>
         <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="email"
@@ -79,7 +82,7 @@ export default function Login() {
             type="submit"
             className="bg-primary text-white py-2 px-4 rounded hover:bg-secondary transition-colors w-full"
           >
-            Iniciar sesión
+            {t("login_action")}
           </button>
         </form>
       </div>
