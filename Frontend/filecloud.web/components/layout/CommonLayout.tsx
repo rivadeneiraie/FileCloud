@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { faUser, faUpload, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUpload, faPlay, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "@/components/layout/Logo";
 import SearchBar from "@/components/common/SearchBar";
@@ -101,6 +101,20 @@ export default function CommonLayout({ children, showPanel = true }: { children:
           </button>
           {/* Menu items */}
           <div className="flex flex-col items-center w-full mt-8">
+            {/* Home */}
+            <button
+              className={`
+                flex items-center w-full px-2 py-3 rounded hover:bg-gray-100 transition
+                ${sidebarOpen ? "justify-start" : "justify-center"}
+              `}
+              onClick={() => router.push("/home")}
+            >
+              <FontAwesomeIcon icon={faHouse} className="w-6 h-6 text-primary cursor-pointer" />
+              {sidebarOpen && 
+                  <span className="ml-3 text-primary font-semibold">Home</span>
+              }
+            </button>
+            {/* Subir archivo */}
             <button
               className={`
                 flex items-center w-full px-2 py-3 rounded hover:bg-gray-100 transition
@@ -108,10 +122,24 @@ export default function CommonLayout({ children, showPanel = true }: { children:
               `}
               onClick={() => router.push("/subir")}
             >
-              <FontAwesomeIcon icon={faUpload} className="w-6 h-6 text-primary" />
-              {sidebarOpen && <span className="ml-3 text-primary font-semibold">Subir Archivo</span>}
+              <FontAwesomeIcon icon={faUpload} className="w-6 h-6 text-primary cursor-pointer" />
+              {sidebarOpen && 
+                  <span className="ml-3 text-primary font-semibold">Subir archivo</span>
+              }
             </button>
-            {/* Agrega más items aquí si lo necesitas */}
+            {/* Público */}
+            <button
+              className={`
+                flex items-center w-full px-2 py-3 rounded hover:bg-gray-100 transition
+                ${sidebarOpen ? "justify-start" : "justify-center"}
+              `}
+              onClick={() => router.push("/public")}
+            >
+              <FontAwesomeIcon icon={faUser} className="w-6 h-6 text-primary cursor-pointer" />
+              {sidebarOpen && 
+                  <span className="ml-3 text-primary font-semibold">Público</span>
+              }
+            </button>
           </div>
         </div>
         )}
