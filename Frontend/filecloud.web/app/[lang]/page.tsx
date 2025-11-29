@@ -6,7 +6,8 @@ import { useSearchParams } from "next/navigation";
 import DataTable from "@/components/common/DataTable";
 import CommonLayout from "@/components/layout/CommonLayout";
 
-export default function Index() {
+export default function Index(){
+  
   const [files, setFiles] = useState<FileDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
