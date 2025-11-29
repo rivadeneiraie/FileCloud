@@ -4,11 +4,8 @@ import DataTable from "@/components/common/DataTable";
 import { FileDTO, getPublicFiles } from "@/lib/services/FilesServices";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useTranslation } from "@/lib/helpers/useTranslation";
-
 
 export default function Home() {
-  const { t } = useTranslation();
 
   const [files, setFiles] = useState<FileDTO[]>([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +17,7 @@ export default function Home() {
       const data = await getPublicFiles();
       setFiles(data);
     } catch (err) {
-      setError(t("load_files_error"));
+      setError("Error al cargar los archivos");
     } finally {
       setLoading(false);
     }
